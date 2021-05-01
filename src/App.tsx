@@ -7,14 +7,14 @@ import {
   useRouteMatch,
   useParams,
   Redirect
-} from "react-router-dom";
+} from "react-router-dom"
 
 const MyMenu: React.VFC = () => {
-  return null;
+  return null
 }
 
 // FIXME: replace 'any' for type safety
-const MyRoute: React.FC<any> = ({children, ...other}) => {
+const MyRoute: React.FC<any> = ({ children, ...other }) => {
   return (
     <Route {...other}>{children}</Route>
   )
@@ -23,27 +23,28 @@ const MyRoute: React.FC<any> = ({children, ...other}) => {
 export const App: React.VFC = () => {
   const jsx = (
     <Router basename="~mark/react003/">
-      <MyMenu/>
+      <MyMenu />
       <div className="content">
         <Switch>
           {/* Next optimization: The title is duplicated in the component. Either move the title into or out of the component */}
           <Route exact path="/">
-            <Redirect to="/home"/>
+            <Redirect to="/home" />
           </Route>
-          <MyRoute title="Home" path="/home" component={Home}/>
-          <MyRoute title="Topics" path="/topics" component={Topics}/>
-          <MyRoute title="About" path="/about" component={About}/>
+          <MyRoute title="🍽 Food" path="/food" component={Food} />
+          <MyRoute title="🏠 Home" path="/home" component={Home} />
+          <MyRoute title="🥸 Topics" path="/topics" component={Topics} />
+          <MyRoute title="📚 About" path="/about" component={About} />
         </Switch>
       </div>
     </Router>
-  );
+  )
 
   // search UI tree to generate menu
   const menu: Array<React.ReactNode> = []
   forAllChildren(jsx, (child: React.ReactNode, index: number, depth: number) => {
     if (React.isValidElement(child)) {
       if (child.type === MyRoute) {
-        const link = React.createElement(NavLink, {to: child.props.path}, child.props.title)
+        const link = React.createElement(NavLink, { to: child.props.path }, child.props.title)
         menu.push(React.createElement('li', {}, link))
       }
     }
@@ -54,7 +55,7 @@ export const App: React.VFC = () => {
     // console.log(index, depth, child)
     if (React.isValidElement(child)) {
       if (child.type === MyMenu) {
-        return React.createElement('ul', { class: "menu"}, menu)
+        return React.createElement('ul', { class: "menu" }, menu)
       }
     }
     return child
@@ -70,7 +71,7 @@ function forAllChildrenHelper(jsx: React.ReactNode, closure: (child: React.React
     if (React.isValidElement(child)) {
       closure(child, index, depth)
       if (child.props.children) {
-        forAllChildrenHelper(child.props.children, closure, depth+1)
+        forAllChildrenHelper(child.props.children, closure, depth + 1)
       }
     }
   })
@@ -88,9 +89,9 @@ function forAllChildrenCloneHelper(jsx: React.ReactNode, closure: (child: React.
       if (child2 !== child && child2.props.children) {
         children = child2.props.children
       } else
-      if (child.props.children) {
-        children = forAllChildrenCloneHelper(child.props.children, closure, depth+1)
-      }
+        if (child.props.children) {
+          children = forAllChildrenCloneHelper(child.props.children, closure, depth + 1)
+        }
       // child.props.children.m==
       return React.cloneElement(child2, child.props, children)
     }
@@ -98,16 +99,25 @@ function forAllChildrenCloneHelper(jsx: React.ReactNode, closure: (child: React.
   })
 }
 
+const Food: React.VFC = () => {
+  return <React.Fragment>
+    <h1>Food</h1>
+    <h2> ☕️ Breakfast</h2>
+    <h2>🍱 Lunch</h2>
+    <h2>🍷 Dinner</h2>
+  </React.Fragment>
+}
+
 const Home: React.VFC = () => {
-  return <h2>Home</h2>;
+  return <h2>Home</h2>
 }
 
 const About: React.VFC = () => {
-  return <h2>About</h2>;
+  return <h2>About</h2>
 }
 
 const Topics: React.VFC = () => {
-  let match = useRouteMatch();
+  let match = useRouteMatch()
 
   return (
     <React.Fragment>
@@ -137,10 +147,10 @@ const Topics: React.VFC = () => {
         </Route>
       </Switch>
     </React.Fragment>
-  );
+  )
 }
 
 const Topic: React.VFC = () => {
-  const { topicId } = useParams<{topicId?: string}>();
-  return <h3>Requested topic ID: {topicId}</h3>;
+  const { topicId } = useParams<{ topicId?: string }>()
+  return <h3>Requested topic ID: {topicId}</h3>
 }

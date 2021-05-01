@@ -51,7 +51,7 @@ ul.menu > li > a:hover {
   border-color: transparent;
 }
 
-
+/* <NavLink/> adds the class 'active' to the active link */
 ul.menu > li > a.active {
   color: rgb(0, 45, 114);
   background: rgb(204, 224, 255);
