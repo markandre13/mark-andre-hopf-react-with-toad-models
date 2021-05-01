@@ -1,0 +1,24 @@
+Options +FollowSymLinks
+
+<IfModule mod_rewrite.c>
+
+  RewriteEngine On
+  RewriteBase "/~mark/react003/"
+
+  # -: no substitution
+  RewriteRule ^/~mark/react003/index\.html$ - [L]
+
+  # RewriteCond <TestString> <CondPattern> [flags]
+  # REQUEST_FILENAME: The full local filesystem path to the file or script matching the reques
+  # not a file
+  RewriteCond %{REQUEST_FILENAME} !-f
+  # not a directory
+  RewriteCond %{REQUEST_FILENAME} !-d
+  # not a symbolic ink
+  RewriteCond %{REQUEST_FILENAME} !-l
+
+  # RewriteRule <pattern> <substitution> <flags>
+  # L|last: last rule, don't apply any more rules
+  RewriteRule . /~mark/react003/index.html [L]
+
+</IfModule>
