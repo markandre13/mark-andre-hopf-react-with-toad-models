@@ -1,3 +1,8 @@
+
+inputmode & pattern may not work on safari, polyfill?
+
+
+
 Apache on Mac
 
 tail -f /var/log/apache2/error_log

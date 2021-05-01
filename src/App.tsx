@@ -4,10 +4,23 @@ import {
   Switch,
   Route,
   NavLink,
-  useRouteMatch,
-  useParams,
   Redirect
 } from "react-router-dom"
+import { About } from "./view/About"
+import { Food } from "./view/Food"
+import { Home } from "./view/Home"
+import { Topics } from "./view/Topics"
+
+// With react, rollup takes about 4s to compile... :(
+// compiled file is 155119 bytes, gzipped 50348 bytes
+
+// With material-ui, rollup takes about 5s to compile... :(
+// compiled file is 286152 bytes, gzipped 88842 bytes
+
+// * material ui doesn't provide input validation
+// * inputMode: 'numeric', pattern: '[0-9]*' work's like shit
+//    pattern is a HTML feature and work for the input types text, date, search, url, tel, email, and password
+// * https://github.com/NoHomey/material-ui-number-input is deprecated
 
 const MyMenu: React.VFC = () => {
   return null
@@ -55,7 +68,7 @@ export const App: React.VFC = () => {
     // console.log(index, depth, child)
     if (React.isValidElement(child)) {
       if (child.type === MyMenu) {
-        return React.createElement('ul', { class: "menu" }, menu)
+        return React.createElement('ul', { className: "menu" }, menu)
       }
     }
     return child
@@ -99,58 +112,4 @@ function forAllChildrenCloneHelper(jsx: React.ReactNode, closure: (child: React.
   })
 }
 
-const Food: React.VFC = () => {
-  return <React.Fragment>
-    <h1>Food</h1>
-    <h2> ☕️ Breakfast</h2>
-    <h2>🍱 Lunch</h2>
-    <h2>🍷 Dinner</h2>
-  </React.Fragment>
-}
 
-const Home: React.VFC = () => {
-  return <h2>Home</h2>
-}
-
-const About: React.VFC = () => {
-  return <h2>About</h2>
-}
-
-const Topics: React.VFC = () => {
-  let match = useRouteMatch()
-
-  return (
-    <React.Fragment>
-      <h2>Topics</h2>
-
-      <ul>
-        <li>
-          <NavLink to={`${match.url}/components`}>Components</NavLink>
-        </li>
-        <li>
-          <NavLink to={`${match.url}/props-v-state`}>
-            Props v. State
-          </NavLink>
-        </li>
-      </ul>
-
-      {/* The Topics page has its own <Switch> with more routes
-          that build on the /topics URL path. You can think of the
-          2nd <Route> here as an "index" page for all topics, or
-          the page that is shown when no topic is selected */}
-      <Switch>
-        <Route path={`${match.path}/:topicId`}>
-          <Topic />
-        </Route>
-        <Route path={match.path}>
-          <h3>Please select a topic.</h3>
-        </Route>
-      </Switch>
-    </React.Fragment>
-  )
-}
-
-const Topic: React.VFC = () => {
-  const { topicId } = useParams<{ topicId?: string }>()
-  return <h3>Requested topic ID: {topicId}</h3>
-}
