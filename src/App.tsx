@@ -11,6 +11,8 @@ import { Food } from "./view/Food"
 import { Home } from "./view/Home"
 import { Topics } from "./view/Topics"
 
+import { Survey } from "./model/Survey"
+
 // With react, rollup takes about 4s to compile... :(
 // compiled file is 155119 bytes, gzipped 50348 bytes
 
@@ -33,6 +35,8 @@ const MyRoute: React.FC<any> = ({ children, ...other }) => {
   )
 }
 
+const survey = new Survey()
+
 export const App: React.VFC = () => {
   const jsx = (
     <Router basename="~mark/react003/">
@@ -44,7 +48,9 @@ export const App: React.VFC = () => {
             <Redirect to="/home" />
           </Route>
           <MyRoute title="🏠 Home" path="/home" component={Home} />
-          <MyRoute title="🍽 Food" path="/food" component={Food} />
+          <MyRoute title="🍽 Food" path="/food">
+            <Food survey={survey}/>
+          </MyRoute>
           <MyRoute title="🥸 Topics" path="/topics" component={Topics} />
           <MyRoute title="📚 About" path="/about" component={About} />
         </Switch>

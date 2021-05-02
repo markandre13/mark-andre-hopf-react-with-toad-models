@@ -1,8 +1,8 @@
 import React from "react"
-import { Input } from "./Input"
-import { NumberModel } from "./NumberModel"
+import { Input } from "../util/view/Input"
+import { Survey } from "../model/Survey"
 
-export const Food: React.VFC = () => {
+export const Food: React.VFC<{survey: Survey}> = ({survey}) => {
   return <React.Fragment>
     <h1>Potential Calculator</h1>
     Total Potential €{survey.getTotal()}
@@ -27,24 +27,5 @@ export const Food: React.VFC = () => {
 
   </React.Fragment>
 }
-
-class Servings {
-  numberOfMeals = new NumberModel(10)
-  averagePrice = new NumberModel(4.99)
-}
-
-class Survey {
-  breakfast = new Servings()
-  lunch = new Servings()
-  dinner = new Servings()
-  numberDaysOpenPerWeek = new NumberModel(5)
-  weeksOpenPerYear = new NumberModel(51)
-  getTotal(): number {
-    return this.numberDaysOpenPerWeek.value * this.weeksOpenPerYear.value
-  }
-}
-
-const survey = new Survey()
-
 
 

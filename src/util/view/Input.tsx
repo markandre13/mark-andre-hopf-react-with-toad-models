@@ -1,6 +1,6 @@
 import React from "react"
-import { TextModel } from "./TextModel"
-import { NumberModel } from "./NumberModel"
+import { TextModel } from "../model/TextModel"
+import { NumberModel } from "../model/NumberModel"
 
 interface InputXState {
   value: string
