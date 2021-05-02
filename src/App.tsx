@@ -1,6 +1,6 @@
 import React from "react"
 import {
-  BrowserRouter as Router,
+  MemoryRouter as Router,
   Switch,
   Route,
   NavLink,
@@ -39,7 +39,7 @@ const survey = new Survey()
 
 export const App: React.VFC = () => {
   const jsx = (
-    <Router basename="~mark/react003/">
+    <Router>
       <MyMenu />
       <div className="content">
         <Switch>
