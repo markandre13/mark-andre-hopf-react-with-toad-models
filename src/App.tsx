@@ -43,8 +43,8 @@ export const App: React.VFC = () => {
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
-          <MyRoute title="🍽 Food" path="/food" component={Food} />
           <MyRoute title="🏠 Home" path="/home" component={Home} />
+          <MyRoute title="🍽 Food" path="/food" component={Food} />
           <MyRoute title="🥸 Topics" path="/topics" component={Topics} />
           <MyRoute title="📚 About" path="/about" component={About} />
         </Switch>
