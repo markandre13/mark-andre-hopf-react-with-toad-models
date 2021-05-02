@@ -31,7 +31,10 @@ export const Food: React.VFC = () => {
 export class TextModel extends GenericModel<string> {
 }
 
-const weeksOpenPerYear = new TextModel("4711")
+export class NumberModel extends GenericModel<number> {
+}
+
+const weeksOpenPerYear = new NumberModel(4711)
 
 interface InputXState {
   value: string
@@ -39,7 +42,7 @@ interface InputXState {
 
 interface InputXProps {
   label: string
-  model: TextModel
+  model: TextModel|NumberModel
 }
 
 class InputX extends React.Component<InputXProps, InputXState> {
@@ -49,13 +52,13 @@ class InputX extends React.Component<InputXProps, InputXState> {
 
   constructor(props: InputXProps) {
     super(props)
-    this.state = {value: props.model.value }
+    this.state = {value: `${props.model.value}` }
     this.id = `input-${++InputX.idCounter}`
   }
 
   componentDidMount() {
     this.props.model.modified.add( () => {
-      this.setState({value: this.props.model.value })
+      this.setState({value: `${this.props.model.value}` })
     }, this)
   }
 
@@ -66,7 +69,17 @@ class InputX extends React.Component<InputXProps, InputXState> {
   render(): React.ReactNode {
     return <div className="inputWithLabel">
     <label htmlFor={this.id}>{`${this.props.label} "${this.state.value}"`}</label>
-    <input id={this.id} value={this.state.value} onChange={(event) => this.props.model.value = event.target.value}/>
+    <input id={this.id} value={this.state.value} onChange={
+      (event) => {
+        if (this.props.model instanceof NumberModel) {
+          const value = Number.parseFloat(event.target.value)
+          if (!Number.isNaN(value))
+            this.props.model.value = value
+          this.setState({value: event.target.value })
+        } else {
+          this.props.model.value = event.target.value
+        }
+      }}/>
   </div>
   }
 }
