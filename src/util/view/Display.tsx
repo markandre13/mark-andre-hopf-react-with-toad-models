@@ -1,5 +1,6 @@
 import React from "react"
-import { Signal, attachSignalToModels, detachSignalFromModels } from "../../util"
+import { Signal } from "../Signal"
+import { attachSignalToModels, detachSignalFromModels } from "../functions"
 
 export interface DisplayState {
     value: string
