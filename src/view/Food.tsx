@@ -1,6 +1,5 @@
 import React from "react"
-import { Input } from "../util/view/Input"
-import { Display } from "../util/view/Display"
+import { Input, Display } from "../util"
 import { Survey } from "../model/Survey"
 
 export const Food: React.VFC<{survey: Survey}> = ({survey}) => {

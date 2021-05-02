@@ -1,5 +1,4 @@
-import { NumberModel } from "../util/model/NumberModel"
-import { ContainerModel } from "../util/model/ContainerModel"
+import { NumberModel, ContainerModel } from "../util"
 
 // TODO: this should read as tight as JSON
 // TODO: maybe generate the typescript * Java DTO from a shared definition
@@ -20,7 +19,7 @@ export class Survey extends ContainerModel {
 class Servings extends ContainerModel {
     numberOfMeals = this.observe(new NumberModel(10))
     averagePrice = this.observe(new NumberModel(4.99))
-    
+
     get total(): number {
         return this.numberOfMeals.value * this.averagePrice.value
     }
