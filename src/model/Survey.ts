@@ -1,24 +1,24 @@
-import { NumberModel, ContainerModel } from "../util"
+import { NumberModel } from "../util"
 
-// TODO: this should read as tight as JSON
-// TODO: maybe generate the typescript * Java DTO from a shared definition
-export class Survey extends ContainerModel {
+export class Survey {
     percentage = new NumberModel(0.25)
-    breakfast = this.observe(new Servings())
-    lunch = this.observe(new Servings())
-    dinner = this.observe(new Servings())
-    numberDaysOpenPerWeek = this.observe(new NumberModel(5))
-    weeksOpenPerYear = this.observe(new NumberModel(51))
+    breakfast = new Servings()
+    lunch = new Servings()
+    dinner = new Servings()
+    numberDaysOpenPerWeek = new NumberModel(5)
+    weeksOpenPerYear = new NumberModel(51)
 
     get total(): number {
-        return this.percentage.value * ( this.breakfast.total + this.lunch.total + this.dinner.total )
-        * this.numberDaysOpenPerWeek.value * this.weeksOpenPerYear.value
+        return this.percentage.value
+            * (this.breakfast.total + this.lunch.total + this.dinner.total)
+            * this.numberDaysOpenPerWeek.value
+            * this.weeksOpenPerYear.value
     }
 }
 
-class Servings extends ContainerModel {
-    numberOfMeals = this.observe(new NumberModel(10))
-    averagePrice = this.observe(new NumberModel(4.99))
+class Servings {
+    numberOfMeals = new NumberModel(10)
+    averagePrice = new NumberModel(4.99)
 
     get total(): number {
         return this.numberOfMeals.value * this.averagePrice.value

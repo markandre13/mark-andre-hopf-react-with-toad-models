@@ -3,5 +3,9 @@
   "compilerOptions": {
     "module": "commonjs",
     "isolatedModules": false
-  }
+  },
+  "include": [
+    "src",
+    "test"
+  ]
 }
