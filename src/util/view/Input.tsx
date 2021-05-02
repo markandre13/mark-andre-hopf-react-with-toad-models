@@ -48,7 +48,7 @@ export class Input extends React.Component<InputProps, InputState> {
 
   render(): React.ReactNode {
     return <div className="inputWithLabel">
-      <label htmlFor={this.id}>{`${this.props.label} "${this.state.value}"`}</label>
+      <label htmlFor={this.id}>{this.props.label}</label>
       <input id={this.id} value={this.state.value} onChange={this.onChange} />
     </div>
   }
