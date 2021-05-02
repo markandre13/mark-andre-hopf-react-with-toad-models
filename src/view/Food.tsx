@@ -1,11 +1,12 @@
 import React from "react"
 import { Input } from "../util/view/Input"
+import { Display } from "../util/view/Display"
 import { Survey } from "../model/Survey"
 
 export const Food: React.VFC<{survey: Survey}> = ({survey}) => {
   return <React.Fragment>
     <h1>Potential Calculator</h1>
-    Total Potential €{survey.getTotal()}
+    Total Potential €<Display model={survey} code={()=>survey.total.toFixed(2)}/>
 
     <h2>Servings</h2>
 
@@ -27,5 +28,3 @@ export const Food: React.VFC<{survey: Survey}> = ({survey}) => {
 
   </React.Fragment>
 }
-
-
