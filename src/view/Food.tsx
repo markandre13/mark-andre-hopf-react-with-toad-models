@@ -3,7 +3,7 @@ import { Input, Display } from "../util"
 import { Survey } from "../model/Survey"
 
 export const Food: React.VFC<{survey: Survey}> = ({survey}) => {
-  return <React.Fragment>
+  return <>
     <h1>Potential Calculator</h1>
     Total Potential €<Display model={survey} code={()=>survey.total.toFixed(2)}/>
 
@@ -24,6 +24,5 @@ export const Food: React.VFC<{survey: Survey}> = ({survey}) => {
     <h2>Business Hours</h2>
     <Input label="Days open per week" model={survey.numberDaysOpenPerWeek} />
     <Input label="Weeks open per year" model={survey.weeksOpenPerYear}/>
-
-  </React.Fragment>
+  </>
 }
