@@ -11,13 +11,13 @@ export const Food: React.VFC<{survey: Survey}> = ({survey}) => {
     <h2>Servings</h2>
 
     {[
-      { title: "☕️ Breakfast", name: survey.breakfast },
-      { title: "🍱 Lunch", name: survey.lunch },
-      { title: "🍷 Dinner", name: survey.dinner }].map(item =>
+      { title: "☕️ Breakfast", serving: survey.breakfast },
+      { title: "🍱 Lunch", serving: survey.lunch },
+      { title: "🍷 Dinner", serving: survey.dinner }].map(item =>
         <React.Fragment>
           <h3>{item.title}</h3>
-          <Input label="Daily Servings" model={item.name.numberOfMeals} />
-          <Input label="Average Price €" model={item.name.averagePrice} />
+          <Input label="Daily Servings" model={item.serving.numberOfMeals} />
+          <Input label="Average Price €" model={item.serving.averagePrice} />
         </React.Fragment>
       )
     }
