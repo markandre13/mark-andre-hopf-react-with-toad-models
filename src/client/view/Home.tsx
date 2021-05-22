@@ -13,6 +13,13 @@ import { Resource, useResource } from "rest-hooks"
 // useSubscription
 // useRetrieve
 
+// can we change cached values?
+// how to send data back?
+// can we look into the cache?
+// is there a service worker in place?
+// what about caching the webapp with a service worker?
+// can mockd be used in a unit test for rest-hooks? (karma, pupetter, local?)
+
 class ArticleResource extends Resource {
   readonly id: string = ''
   readonly title: string = '';
