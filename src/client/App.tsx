@@ -39,7 +39,7 @@ const survey = new Survey()
 
 export const App: React.VFC = () => {
   const jsx = (
-    <BrowserRouter basename="~mark/react003/">
+    <BrowserRouter>
       <MyMenu />
       <div className="content">
         <Switch>

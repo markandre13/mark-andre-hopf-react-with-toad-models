@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "build": "rollup --config rollup.config.js",
+    "start": "node js/server.js",
     "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register --extension .spec.tsx"
   },
   "author": "",

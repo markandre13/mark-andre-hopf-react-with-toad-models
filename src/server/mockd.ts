@@ -1,4 +1,5 @@
 import { AddressInfo, Server, Socket } from "net"
+import * as fs from "fs"
 import { Writable } from "stream"
 
 export class MockDaemon {
@@ -36,20 +37,24 @@ export class MockDaemon {
                     console.log(`*** GOT DATA FROM CLIENT, CHECKING EXPECTATIONS`)
                     matcher._checkExpectations(response)
                     matcher._respond(client)
-                    client.destroy()
+                    client.end()
                 }
             }
         })
         client.on("close", () => {
-            console.log("client closed")
-            this.socket.close()
+            // console.log("client closed")
+            // this.socket.close()
+        })
+        client.on("error", (error: Error) => {
+            console.log(`*** CLIENT ERROR ${error.message}`)
+            client.end()
         })
     }
 
     private getMatcher(response: Response): Matcher {
         const matcher = this.matchUrl.get(`${response.method}:${response.path}`)
         if (matcher === undefined) {
-            client.destroy()
+            // client.destroy()
             let str = ""
             for (const url of this.matchUrl.keys()) {
                 str = `${str} '${url}'`
@@ -89,20 +94,31 @@ class Matcher {
         return this.expectContent(content)
     }
     respond(status: number, content?: string | Object, contentType?: string) {
+        let contentLength: number | string | undefined
+        if (content !== undefined) {
+            if (typeof content === 'object') {
+                content = JSON.stringify(content)
+                if (contentType === undefined)
+                    contentType = "application/json"
+            }
+            contentLength = Buffer.from(content as string).length
+        }
+        contentType = contentType !== undefined ? `Content-Type: ${contentType}\r\n` : ""
+        contentLength = contentLength !== undefined ? `Content-Length: ${contentLength}\r\n` : ""
+
         this.response = (output: Writable) => {
             console.log(`*** RESPOND STATUS ${status}`)
-            let contentLength
-            if (content !== undefined) {
-                if (typeof content === 'object') {
-                    content = JSON.stringify(content)
-                    if (contentType === undefined)
-                        contentType = "application/json"
-                }
-                contentLength = Buffer.from(content as string).length
-            }
-            contentType = contentType !== undefined ? `Content-Type: ${contentType}\r\n` : ""
-            contentLength = contentLength !== undefined ? `Content-Length: ${contentLength}\r\n` : ""
+            console.log(`HTTP/1.1 ${status} OK\r\n${contentType}${contentLength}\r\n...`)
             output.write(`HTTP/1.1 ${status} OK\r\n${contentType}${contentLength}\r\n${content ?? ''}`)
+        }
+    }
+    respondWithFile(status: number, filename: string, contentType: string) {
+        const x = fs.readFileSync(filename)
+        this.respond(status, x.toString(), contentType)
+    }
+    redirect(status: number, location: string) {
+        this.response = (output: Writable) => {
+            output.write(`HTTP/1.1 ${status} Moved\r\nLocation: ${location}\r\n\r\n`)  
         }
     }
 
