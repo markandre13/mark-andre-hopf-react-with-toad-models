@@ -5,12 +5,13 @@ import replace from '@rollup/plugin-replace';
 // import { terser } from "rollup-plugin-terser"
  
 export default {
-    input: './src/main.tsx',
+    input: './src/client/main.tsx',
     output: {
-      name: 'react003',
+      name: 'main',
       file: 'js/main.js',
       format: 'iife',
-      sourcemap: true
+      sourcemap: true,
+      extend: true
     },
     plugins: [
         replace({

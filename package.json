@@ -1,14 +1,14 @@
 {
-  "name": "react003",
+  "name": "react-with-toad-models",
   "version": "1.0.0",
-  "description": "React Experiment 3",
+  "description": "TOAD's MVC/MVVM Models for React",
   "main": "index.html",
   "scripts": {
     "build": "rollup --config rollup.config.js",
     "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register --extension .spec.tsx"
   },
   "author": "",
-  "license": "ISC",
+  "license": "AGPL-3.0",
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

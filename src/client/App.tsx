@@ -1,6 +1,6 @@
 import React from "react"
 import {
-  MemoryRouter as Router,
+  BrowserRouter,
   Switch,
   Route,
   NavLink,
@@ -39,7 +39,7 @@ const survey = new Survey()
 
 export const App: React.VFC = () => {
   const jsx = (
-    <Router>
+    <BrowserRouter basename="~mark/react003/">
       <MyMenu />
       <div className="content">
         <Switch>
@@ -55,7 +55,7 @@ export const App: React.VFC = () => {
           <MyRoute title="📚 About" path="/about" component={About} />
         </Switch>
       </div>
-    </Router>
+    </BrowserRouter>
   )
 
   // search UI tree to generate menu
