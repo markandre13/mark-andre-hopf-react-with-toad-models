@@ -1,4 +1,5 @@
 import React from "react"
+import { CacheProvider } from 'rest-hooks'
 import {
   BrowserRouter,
   Switch,
@@ -39,23 +40,25 @@ const survey = new Survey()
 
 export const App: React.VFC = () => {
   const jsx = (
-    <BrowserRouter>
-      <MyMenu />
-      <div className="content">
-        <Switch>
-          {/* Next optimization: The title is duplicated in the component. Either move the title into or out of the component */}
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-          <MyRoute title="🏠 Home" path="/home" component={Home} />
-          <MyRoute title="🍽 Food" path="/food">
-            <Food survey={survey}/>
-          </MyRoute>
-          <MyRoute title="🥸 Topics" path="/topics" component={Topics} />
-          <MyRoute title="📚 About" path="/about" component={About} />
-        </Switch>
-      </div>
-    </BrowserRouter>
+    <CacheProvider>
+      <BrowserRouter>
+        <MyMenu />
+        <div className="content">
+          <Switch>
+            {/* Next optimization: The title is duplicated in the component. Either move the title into or out of the component */}
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+            <MyRoute title="🏠 Home" path="/home" component={Home} />
+            <MyRoute title="🍽 Food" path="/food">
+              <Food survey={survey} />
+            </MyRoute>
+            <MyRoute title="🥸 Topics" path="/topics" component={Topics} />
+            <MyRoute title="📚 About" path="/about" component={About} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </CacheProvider>
   )
 
   // search UI tree to generate menu

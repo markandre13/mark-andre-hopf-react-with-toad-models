@@ -15,4 +15,20 @@ mockd.expect.get("/js/main.js").respondWithFile(200, "js/main.js", "text/javascr
 mockd.expect.get("/js/main.js.map").respondWithFile(200, "js/main.js.map", "application/json")
 fs.readdirSync("ttf").forEach(file => {
     mockd.expect.get(`/ttf/${file}`).respondWithFile(200, `ttf/${file}`, "text/ttf")
-});
+})
+
+mockd.expect
+    .get("/api/articles/4711")
+    .delay(1000)
+    .respond(200, { id: "4711", title: "Yoo", body: "Sup?" })
+
+mockd.expect
+    .get("/api/articles/")
+    .delay(2000)
+    .respond(200,
+        [
+            { id: "4711", title: "Tomato", body: "Soup" },
+            { id: "1701", title: "Chicken", body: "Soup" },
+            { id: "1541", title: "Noodle", body: "Soup" }
+        ]
+    )

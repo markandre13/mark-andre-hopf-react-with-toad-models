@@ -37,7 +37,6 @@ export class MockDaemon {
                     console.log(`*** GOT DATA FROM CLIENT, CHECKING EXPECTATIONS`)
                     matcher._checkExpectations(response)
                     matcher._respond(client)
-                    client.end()
                 }
             }
         })
@@ -69,6 +68,7 @@ export class MockDaemon {
 class Matcher {
     private mocker: MockDaemon
     private expectations = new Array<(response: Response) => void>()
+    private _delay = 0
     private response?: (output: Writable) => void
 
     constructor(mocker: MockDaemon) {
@@ -92,6 +92,10 @@ class Matcher {
     }
     content(content: string) {
         return this.expectContent(content)
+    }
+    delay(delay: number) {
+        this._delay = delay
+        return this
     }
     respond(status: number, content?: string | Object, contentType?: string) {
         let contentLength: number | string | undefined
@@ -172,8 +176,17 @@ class Matcher {
     }
 
     _respond(output: Writable) {
-        if (this.response !== undefined)
-            this.response(output)
+        if (this.response !== undefined) {
+            if (this._delay > 0) {
+                setTimeout( () => { 
+                    this.response!(output)
+                    output.end()
+                }, this._delay)
+            } else {
+                this.response(output)
+                output.end()
+            }
+        }
     }
 }
 
