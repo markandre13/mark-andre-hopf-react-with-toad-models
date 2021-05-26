@@ -117,8 +117,13 @@ class Matcher {
         }
     }
     respondWithFile(status: number, filename: string, contentType: string) {
-        const x = fs.readFileSync(filename)
-        this.respond(status, x.toString(), contentType)
+        contentType = `Content-Type: ${contentType}\r\n`
+        this.response = (output: Writable) => {
+            const content = fs.readFileSync(filename)
+            const contentLength = `Content-Length: ${content.length}\r\n`
+            console.log(`HTTP/1.1 ${status} OK\r\n${contentType}${contentLength}\r\n...`)
+            output.write(`HTTP/1.1 ${status} OK\r\n${contentType}${contentLength}\r\n${content.toString()}`)
+        }
     }
     redirect(status: number, location: string) {
         this.response = (output: Writable) => {
