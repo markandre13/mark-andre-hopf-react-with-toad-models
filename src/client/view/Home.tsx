@@ -1,10 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { Suspense } from "react"
-import { Resource, useResource } from "rest-hooks"
+import { Resource } from "@rest-hooks/rest"
+import { useResource } from "rest-hooks"
 
 // https://resthooks.io/
-
-// BEWARE: some documentation is outdated: detail() & list() are now postfixed with 'Shape'
 
 // NOTE: one entry in the list has the same id as the single article
 //       which will cause the single article to change too
@@ -12,6 +11,12 @@ import { Resource, useResource } from "rest-hooks"
 // useCache
 // useSubscription
 // useRetrieve
+
+// useContext
+// useState
+// useReducer
+
+// useEffect
 
 // can we change cached values?
 // how to send data back?
@@ -43,7 +48,7 @@ export const Home: React.VFC = () => {
 
 export const Article: React.VFC<{ id: string }> = ({ id }) => {
   // http://localhost:8080/api/articles/4711
-  const article = useResource(ArticleResource.detailShape(), { id })
+  const article = useResource(ArticleResource.detail(), { id })
   return <div style={{border: "1px solid #ccc", background: "#ccf"}}>
     ARTICLE<br />
     ID: {article.id}<br />
@@ -56,7 +61,7 @@ export const Articles: React.VFC = () => {
   // http://localhost:8080/api/articles/
   // additional parameters will be added as query params, eg.
   //   http://localhost:8080/api/articles/?id=4711
-  const articles = useResource(ArticleResource.listShape(), {})
+  const articles = useResource(ArticleResource.list(), {})
   return <>
     {articles.map((article) =>
       <div style={{border: "1px solid #ccc", background: "#cfc"}}>

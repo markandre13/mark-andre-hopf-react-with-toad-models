@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import { Signal, NumberModel, attachSignalToModels, detachSignalFromModels } from "../src/util"
+import { Signal, NumberModel, attachSignalToModels, detachSignalFromModels } from "../src/client/util"
 
 export class Survey {
     percentage = new NumberModel(0.25)
@@ -51,3 +51,15 @@ describe("utils", () => {
         expect(counter).equals(2)
     })
 })
+
+// asynchronous vs threads? here are some numbers https://github.com/jimblandy/context-switch
+
+// https://github.com/facebook/flux/tree/master/examples/flux-todomvc/
+// https://todomvc.com
+
+// note to self: apollo client & graphql for bff (backend for frontend, a api gateway pattern)
+// https://github.com/apollographql/apollo-client
+
+// https://itnext.io/under-the-hood-of-react-hooks-805dc68581c3
+
+// const [reducerState, actionDispatcher] = useState(x)

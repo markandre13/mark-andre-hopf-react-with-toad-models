@@ -5,6 +5,9 @@ console.log("to serve and protect")
 const mockd = new MockDaemon(8080)
 
 mockd.expect.get("/favicon.ico").respond(404)
+mockd.expect.get("/apple-touch-icon.png").respond(404)
+mockd.expect.get("/apple-touch-icon-precomposed.png").respond(404)
+
 mockd.expect.get("/").respondWithFile(200, "index.html", "text/html")
 mockd.expect.get("/home").redirect(303, "/")
 mockd.expect.get("/food").redirect(303, "/")
