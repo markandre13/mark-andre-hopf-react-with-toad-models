@@ -4,7 +4,7 @@ import { Survey } from "../model/Survey"
 
 export const Food: React.VFC<{survey: Survey}> = ({survey}) => {
   return <>
-    <h1>Potential Calculator</h1>
+    <h1>Potential Calculator with toad.js Models</h1>
     Total Potential €<Display model={survey} code={()=>survey.total.toFixed(2)}/>
 
     <h2>Servings</h2>
